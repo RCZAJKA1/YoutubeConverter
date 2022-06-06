@@ -5,6 +5,7 @@
 
 namespace YoutubeConverter
 {
+    using System.Threading;
     using System.Threading.Tasks;
 
     /// <summary>
@@ -17,6 +18,7 @@ namespace YoutubeConverter
         /// </summary>
         /// <param name="url">The URL of the video to convert..</param>
         /// <param name="savePath">The folder path to save the mp3.</param>
-        Task ConvertToMp3Async(string url, string savePath);
+        /// <param name="cancellationToken">The cancellation token to cancel the operation.</param>
+        Task ConvertToMp3Async(string url, string savePath, CancellationToken cancellationToken = default);
     }
 }

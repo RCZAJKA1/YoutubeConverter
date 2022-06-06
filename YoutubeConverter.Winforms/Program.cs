@@ -51,6 +51,7 @@ namespace YoutubeConverter
 
                     // Services
                     services.AddTransient<IYoutubeService, YoutubeService>();
+                    services.AddTransient<IFileService, FileService>();
                 });
         }
     }

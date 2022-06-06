@@ -100,7 +100,8 @@
             }
             catch (Exception ex)
             {
-                this.TextBoxOutput = ex.Message;
+                this.TextBoxOutput += $"Failed to convert file.{Environment.NewLine}{Environment.NewLine}";
+                this.TextBoxOutput += ex.Message;
             }
             finally
             {

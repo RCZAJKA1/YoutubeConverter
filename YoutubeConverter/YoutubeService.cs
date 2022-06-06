@@ -2,6 +2,7 @@
 {
     using System;
     using System.IO;
+    using System.Threading;
     using System.Threading.Tasks;
 
     using MediaToolkit;
@@ -12,26 +13,30 @@
     /// <inheritdoc cref="IYoutubeService"/>
     public sealed class YoutubeService : IYoutubeService
     {
-        /// <inheritdoc />
-        public async Task ConvertToMp3Async(string url, string savePath)
+        /// <summary>
+        ///     The file service.
+        /// </summary>
+        private readonly IFileService _fileService;
+
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="YoutubeService"/> class.
+        /// </summary>
+        /// <param name="fileService">The file service.</param>
+        /// <exception cref="ArgumentNullException"></exception>
+        public YoutubeService(IFileService fileService)
         {
-            if (url == null)
-            {
-                throw new ArgumentNullException(nameof(url));
-            }
-            if (string.IsNullOrWhiteSpace(url))
-            {
-                throw new ArgumentException("The argument cannot be empty or only contain white space.", nameof(url));
-            }
-            if (savePath == null)
-            {
-                throw new ArgumentNullException(nameof(savePath));
-            }
-            if (string.IsNullOrWhiteSpace(savePath))
-            {
-                throw new ArgumentException("The argument cannot be empty or only contain white space.", nameof(savePath));
-            }
-            if (!Directory.Exists(savePath))
+            this._fileService = fileService ?? throw new ArgumentNullException(nameof(fileService));
+        }
+
+        /// <inheritdoc />
+        public async Task ConvertToMp3Async(string url, string savePath, CancellationToken cancellationToken = default)
+        {
+            url.ThrowIfNull(nameof(url));
+            url.ThrowIfEmpty(nameof(url));
+            savePath.ThrowIfNull(nameof(savePath));
+            savePath.ThrowIfEmpty(nameof(savePath));
+
+            if (!this._fileService.DirectoryExists(savePath))
             {
                 throw new InvalidOperationException("The specified save path does not exist.");
             }
@@ -42,10 +47,10 @@
             byte[] videoBytes = await vid.GetBytesAsync().ConfigureAwait(false);
 
             // Write .mp4 file to disk
-            await File.WriteAllBytesAsync(filePathMp4, videoBytes).ConfigureAwait(false);
+            await this._fileService.WriteAllBytesAsync(filePathMp4, videoBytes, cancellationToken).ConfigureAwait(false);
 
             MediaFile inputFile = new MediaFile { Filename = filePathMp4 };
-            string filePathWithoutExtension = filePathMp4.Substring(0, filePathMp4.Length - 4);
+            string filePathWithoutExtension = filePathMp4[..^4];
             MediaFile outputFile = new MediaFile { Filename = $"{filePathWithoutExtension}.mp3" };
 
             using Engine engine = new Engine();
@@ -54,8 +59,7 @@
             // Convert .mp4 file into new .mp3 file and write to disk
             engine.Convert(inputFile, outputFile);
 
-            // TODO: create separate file service
-            File.Delete(filePathMp4);
+            this._fileService.DeleteFile(filePathMp4);
         }
     }
 }
