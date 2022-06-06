@@ -1,9 +1,4 @@
-﻿/*
- *  Open source package used to download Youtube videos
- *  https://github.com/omansak/libvideo
- */
-
-namespace YoutubeConverter
+﻿namespace YoutubeConverter
 {
     using System;
     using System.IO;

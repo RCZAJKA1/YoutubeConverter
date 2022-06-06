@@ -85,8 +85,6 @@
         /// <param name="e">The event arguments.</param>
         private async void ButtonConvert_Click(object sender, EventArgs e)
         {
-            // Sample video https://www.youtube.com/watch?v=4Iany6mSfHM
-
             try
             {
                 FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
