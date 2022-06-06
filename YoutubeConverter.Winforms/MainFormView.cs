@@ -4,12 +4,12 @@
     internal sealed class MainFormView : IMainFormView
     {
         /// <inheritdoc />
-        public string Url { get; set; }
+        public string TextBoxUrl { get; set; }
 
         /// <inheritdoc />
-        public string OutputText { get; set; }
+        public string TextBoxOutput { get; set; }
 
         /// <inheritdoc />
-        public bool ConvertButtonEnabled { get; set; }
+        public bool ButtonConvertEnabled { get; set; }
     }
 }

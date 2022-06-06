@@ -7,6 +7,7 @@ namespace YoutubeConverter
 {
     using System;
     using System.IO;
+    using System.Threading.Tasks;
 
     using MediaToolkit;
     using MediaToolkit.Model;
@@ -17,7 +18,7 @@ namespace YoutubeConverter
     public sealed class YoutubeService : IYoutubeService
     {
         /// <inheritdoc />
-        public void ConvertToMp3(string url, string savePath)
+        public async Task ConvertToMp3Async(string url, string savePath)
         {
             if (url == null)
             {
@@ -41,17 +42,25 @@ namespace YoutubeConverter
             }
 
             YouTube youtube = YouTube.Default;
-            YouTubeVideo vid = youtube.GetVideo(url);
-            File.WriteAllBytes(savePath + vid.FullName, vid.GetBytes());
+            YouTubeVideo vid = await youtube.GetVideoAsync(url).ConfigureAwait(false);
+            string filePathMp4 = Path.Combine(savePath, vid.FullName);
+            byte[] videoBytes = await vid.GetBytesAsync().ConfigureAwait(false);
 
-            MediaFile inputFile = new MediaFile { Filename = savePath + vid.FullName };
+            // Write .mp4 file to disk
+            await File.WriteAllBytesAsync(filePathMp4, videoBytes).ConfigureAwait(false);
 
-            string filePathWithoutExtension = Path.GetFileNameWithoutExtension(savePath + vid.FullName);
+            MediaFile inputFile = new MediaFile { Filename = filePathMp4 };
+            string filePathWithoutExtension = filePathMp4.Substring(0, filePathMp4.Length - 4);
             MediaFile outputFile = new MediaFile { Filename = $"{filePathWithoutExtension}.mp3" };
 
             using Engine engine = new Engine();
             engine.GetMetadata(inputFile);
+
+            // Convert .mp4 file into new .mp3 file and write to disk
             engine.Convert(inputFile, outputFile);
+
+            // TODO: create separate file service
+            File.Delete(filePathMp4);
         }
     }
 }

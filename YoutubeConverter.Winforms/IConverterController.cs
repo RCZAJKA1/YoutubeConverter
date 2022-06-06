@@ -1,5 +1,7 @@
 ﻿namespace YoutubeConverter
 {
+    using System.Threading.Tasks;
+
     /// <summary>
     ///     Handles requests with user input to convert Youtube links to raw audio files.
     /// </summary>
@@ -10,6 +12,6 @@
         /// </summary>
         /// <param name="url">The URL of the YouTube video to convert.</param>
         /// <param name="savePath">The folder path to save the resulting mp3 file to.</param>
-        void ConvertUrlToMp3(string url, string savePath);
+        Task ConvertUrlToMp3Async(string url, string savePath);
     }
 }

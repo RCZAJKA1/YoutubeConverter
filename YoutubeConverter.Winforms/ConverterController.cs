@@ -2,6 +2,7 @@
 {
     using System;
     using System.IO;
+    using System.Threading.Tasks;
 
     /// <inheritdoc cref="IConverterController"/>
     internal sealed class ConverterController : IConverterController
@@ -29,7 +30,7 @@
         }
 
         /// <inheritdoc />
-        public void ConvertUrlToMp3(string url, string savePath)
+        public async Task ConvertUrlToMp3Async(string url, string savePath)
         {
             if (url == null)
             {
@@ -59,9 +60,9 @@
                 throw new InvalidOperationException("The specified save path does not exist.");
             }
 
-            this._mainFormView.OutputText += $"Starting conversion to mp3...{Environment.NewLine}";
+            this._mainFormView.TextBoxOutput += $"Starting conversion to mp3...{Environment.NewLine}";
 
-            this._youtubeService.ConvertToMp3(url, savePath);
+            await this._youtubeService.ConvertToMp3Async(url, savePath).ConfigureAwait(false);
         }
 
         /// <summary>

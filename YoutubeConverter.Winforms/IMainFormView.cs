@@ -8,16 +8,16 @@
         /// <summary>
         ///     Gets and sets the URL of the YouTube video to convert.
         /// </summary>
-        public string Url { get; set; }
+        public string TextBoxUrl { get; set; }
 
         /// <summary>
         ///     Gets and sets the text in the output window.
         /// </summary>
-        public string OutputText { get; set; }
+        public string TextBoxOutput { get; set; }
 
         /// <summary>
         ///     Gets and sets the convert button enabled.
         /// </summary>
-        public bool ConvertButtonEnabled { get; set; }
+        public bool ButtonConvertEnabled { get; set; }
     }
 }

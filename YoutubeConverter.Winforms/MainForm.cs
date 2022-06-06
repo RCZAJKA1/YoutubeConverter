@@ -3,6 +3,8 @@
     using System;
     using System.Windows.Forms;
 
+    using YoutubeConverter.Winforms;
+
     /// <summary>
     ///     The main form.
     /// </summary>
@@ -26,24 +28,54 @@
         }
 
         /// <inheritdoc />
-        public string Url
+        public string TextBoxUrl
         {
             get => this.textBoxUrl.Text;
-            set => this.textBoxUrl.Text = value;
+            set
+            {
+                if (this.textBoxUrl.InvokeRequired)
+                {
+                    ControlHelper.EnsureControlThreadSynchronization(this.textBoxUrl, () => this.textBoxUrl.Text = value);
+                }
+                else
+                {
+                    this.textBoxUrl.Text = value;
+                }
+            }
         }
 
         /// <inheritdoc />
-        public string OutputText
+        public string TextBoxOutput
         {
             get => this.textBoxOutput.Text;
-            set => this.textBoxOutput.Text = value;
+            set
+            {
+                if (this.textBoxOutput.InvokeRequired)
+                {
+                    ControlHelper.EnsureControlThreadSynchronization(this.textBoxOutput, () => this.textBoxOutput.Text = value);
+                }
+                else
+                {
+                    this.textBoxOutput.Text = value;
+                }
+            }
         }
 
         /// <inheritdoc />
-        public bool ConvertButtonEnabled
+        public bool ButtonConvertEnabled
         {
             get => this.buttonConvert.Enabled;
-            set => this.buttonConvert.Enabled = value;
+            set
+            {
+                if (this.buttonConvert.InvokeRequired)
+                {
+                    ControlHelper.EnsureControlThreadSynchronization(this.buttonConvert, () => this.buttonConvert.Enabled = value);
+                }
+                else
+                {
+                    this.buttonConvert.Enabled = value;
+                }
+            }
         }
 
         /// <summary>
@@ -51,7 +83,7 @@
         /// </summary>
         /// <param name="sender">The sender object.</param>
         /// <param name="e">The event arguments.</param>
-        private void ButtonConvert_Click(object sender, EventArgs e)
+        private async void ButtonConvert_Click(object sender, EventArgs e)
         {
             // Sample video https://www.youtube.com/watch?v=4Iany6mSfHM
 
@@ -60,19 +92,22 @@
                 FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
                 folderBrowserDialog.ShowDialog();
 
-                this.textBoxOutput.Clear();
-                this.buttonConvert.Enabled = false;
-                this.textBoxOutput.Text += $"Request to convert URL {this.Url} and save to path {folderBrowserDialog.SelectedPath}.{Environment.NewLine}";
+                this.TextBoxOutput = string.Empty;
+                this.ButtonConvertEnabled = false;
+                this.TextBoxOutput += $"Request to convert URL {this.TextBoxUrl} and save to path {folderBrowserDialog.SelectedPath}.{Environment.NewLine}";
 
-                this._converterController.ConvertUrlToMp3(this.Url, folderBrowserDialog.SelectedPath);
+                await this._converterController.ConvertUrlToMp3Async(this.TextBoxUrl, folderBrowserDialog.SelectedPath).ConfigureAwait(false);
+
+                this.TextBoxOutput += $"Success!{Environment.NewLine}";
             }
             catch (Exception ex)
             {
-                this.textBoxOutput.Text = ex.Message;
+                this.TextBoxOutput = ex.Message;
             }
             finally
             {
-                this.buttonConvert.Enabled = true;
+                this.ButtonConvertEnabled = true;
+                this.TextBoxUrl = string.Empty;
             }
         }
     }
