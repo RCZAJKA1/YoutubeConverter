@@ -10,12 +10,12 @@
         /// <summary>
         ///     The default argument empty exception.
         /// </summary>
-        private const string emptyMessage = "The argument cannot be empty or only contain white space.";
+        private const string EmptyMessage = "The argument cannot be empty or only contain white space.";
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="ArgumentEmptyException"/> class with a specified error message.
         /// </summary>
-        public ArgumentEmptyException() : base(emptyMessage)
+        public ArgumentEmptyException() : base(EmptyMessage)
         {
         }
 

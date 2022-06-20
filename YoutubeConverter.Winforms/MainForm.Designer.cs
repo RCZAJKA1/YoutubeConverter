@@ -54,11 +54,12 @@
             // 
             // textBoxOutput
             // 
-            this.textBoxOutput.Location = new System.Drawing.Point(384, 15);
+            this.textBoxOutput.Dock = System.Windows.Forms.DockStyle.Right;
+            this.textBoxOutput.Location = new System.Drawing.Point(396, 0);
             this.textBoxOutput.Multiline = true;
             this.textBoxOutput.Name = "textBoxOutput";
             this.textBoxOutput.ReadOnly = true;
-            this.textBoxOutput.Size = new System.Drawing.Size(404, 359);
+            this.textBoxOutput.Size = new System.Drawing.Size(404, 450);
             this.textBoxOutput.TabIndex = 2;
             // 
             // buttonConvert

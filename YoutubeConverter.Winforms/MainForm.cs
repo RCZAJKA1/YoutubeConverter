@@ -27,56 +27,30 @@
             this.InitializeComponent();
         }
 
+        #region IMainFormView
+
         /// <inheritdoc />
         public string TextBoxUrl
         {
             get => this.textBoxUrl.Text;
-            set
-            {
-                if (this.textBoxUrl.InvokeRequired)
-                {
-                    ControlHelper.EnsureControlThreadSynchronization(this.textBoxUrl, () => this.textBoxUrl.Text = value);
-                }
-                else
-                {
-                    this.textBoxUrl.Text = value;
-                }
-            }
+            set => this.textBoxUrl.EnsureControlThreadSynchronization(() => this.textBoxUrl.Text = value);
         }
 
         /// <inheritdoc />
         public string TextBoxOutput
         {
             get => this.textBoxOutput.Text;
-            set
-            {
-                if (this.textBoxOutput.InvokeRequired)
-                {
-                    ControlHelper.EnsureControlThreadSynchronization(this.textBoxOutput, () => this.textBoxOutput.Text = value);
-                }
-                else
-                {
-                    this.textBoxOutput.Text = value;
-                }
-            }
+            set => this.textBoxOutput.EnsureControlThreadSynchronization(() => this.textBoxOutput.Text = value);
         }
 
         /// <inheritdoc />
         public bool ButtonConvertEnabled
         {
             get => this.buttonConvert.Enabled;
-            set
-            {
-                if (this.buttonConvert.InvokeRequired)
-                {
-                    ControlHelper.EnsureControlThreadSynchronization(this.buttonConvert, () => this.buttonConvert.Enabled = value);
-                }
-                else
-                {
-                    this.buttonConvert.Enabled = value;
-                }
-            }
+            set => this.textBoxOutput.EnsureControlThreadSynchronization(() => this.buttonConvert.Enabled = value);
         }
+
+        #endregion IMainFormView
 
         /// <summary>
         ///     The clicked event for the 'Convert' button.
