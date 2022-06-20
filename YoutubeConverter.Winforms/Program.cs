@@ -1,11 +1,13 @@
 namespace YoutubeConverter
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Windows.Forms;
 
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
 
+    [ExcludeFromCodeCoverage]
     internal static class Program
     {
         /// <summary>

@@ -1,6 +1,9 @@
 ﻿namespace YoutubeConverter
 {
+    using System.Diagnostics.CodeAnalysis;
+
     /// <inheritdoc cref="IMainFormView"/>
+    [ExcludeFromCodeCoverage]
     internal sealed class MainFormView : IMainFormView
     {
         /// <inheritdoc />
