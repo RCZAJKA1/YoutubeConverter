@@ -38,7 +38,7 @@
 
             if (!this._fileService.DirectoryExists(savePath))
             {
-                throw new InvalidOperationException("The specified save path does not exist.");
+                throw new DirectoryNotFoundException($"The specified save path does not exist: {savePath}");
             }
 
             YouTube youtube = YouTube.Default;
