@@ -1,6 +1,7 @@
 ﻿namespace YoutubeConverter
 {
     using System;
+    using System.IO;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -46,17 +47,17 @@
             bool isValidUrl = this.IsValidYoutubeUrl(url);
             if (!isValidUrl)
             {
-                throw new FormatException("The specified URL is not in the correct format or is not a valid YouTube URL.");
+                throw new FormatException($"The specified URL is not in the correct format or is not a valid YouTube URL: {url}");
             }
 
             if (!this._fileService.DirectoryExists(savePath))
             {
-                throw new InvalidOperationException("The specified save path does not exist.");
+                throw new DirectoryNotFoundException($"The specified save path does not exist: {savePath}");
             }
 
             this._mainFormView.TextBoxOutput += $"Starting conversion to mp3...{Environment.NewLine}";
 
-            await this._youtubeService.ConvertToMp3Async(url, savePath).ConfigureAwait(false);
+            await this._youtubeService.ConvertToMp3Async(url, savePath, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
