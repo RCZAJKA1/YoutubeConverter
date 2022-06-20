@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32519.379
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YoutubeConverter", "YoutubeConverter\YoutubeConverter.csproj", "{8514D16C-9657-4651-BAAC-52745CE382C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YoutubeConverter.Winforms", "YoutubeConverter.Winforms\YoutubeConverter.Winforms.csproj", "{8514D16C-9657-4651-BAAC-52745CE382C7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YoutubeConverter", "YoutubeConverter\YoutubeConverter.csproj", "{9F829EFD-C7F4-44FB-8876-63881C67C813}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YoutubeConverter.Tests", "YoutubeConverter.Tests\YoutubeConverter.Tests.csproj", "{65BF76A2-EC0B-4D6E-918D-2BE31D9E08A4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YoutubeConverter.Winforms.Tests", "YoutubeConverter.Winforms.Tests\YoutubeConverter.Winforms.Tests.csproj", "{BA294AFD-8DBA-4B42-A19F-0D51B14F9E6F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +21,18 @@ Global
 		{8514D16C-9657-4651-BAAC-52745CE382C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8514D16C-9657-4651-BAAC-52745CE382C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8514D16C-9657-4651-BAAC-52745CE382C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F829EFD-C7F4-44FB-8876-63881C67C813}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F829EFD-C7F4-44FB-8876-63881C67C813}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F829EFD-C7F4-44FB-8876-63881C67C813}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F829EFD-C7F4-44FB-8876-63881C67C813}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65BF76A2-EC0B-4D6E-918D-2BE31D9E08A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65BF76A2-EC0B-4D6E-918D-2BE31D9E08A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65BF76A2-EC0B-4D6E-918D-2BE31D9E08A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65BF76A2-EC0B-4D6E-918D-2BE31D9E08A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA294AFD-8DBA-4B42-A19F-0D51B14F9E6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA294AFD-8DBA-4B42-A19F-0D51B14F9E6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA294AFD-8DBA-4B42-A19F-0D51B14F9E6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA294AFD-8DBA-4B42-A19F-0D51B14F9E6F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
