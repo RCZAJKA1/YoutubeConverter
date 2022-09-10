@@ -8,6 +8,9 @@
     /// <inheritdoc cref="IConverterController"/>
     internal sealed class ConverterController : IConverterController
     {
+        private const string CONVERT = "Convert";
+        private const string CANCEL = "Cancel";
+
         /// <summary>
         ///     The main form view.
         /// </summary>
@@ -24,6 +27,11 @@
         private readonly IFileService _fileService;
 
         /// <summary>
+        ///     The cancellation token source.
+        /// </summary>
+        internal CancellationTokenSource _cancellationTokenSource;
+
+        /// <summary>
         ///     Creates a new instance of the <see cref="ConverterController"/> class.
         /// </summary>
         /// <param name="mainFormView">The main form view.</param>
@@ -34,10 +42,14 @@
             this._mainFormView = mainFormView ?? throw new ArgumentNullException(nameof(mainFormView));
             this._youtubeService = youtubeService ?? throw new ArgumentNullException(nameof(youtubeService));
             this._fileService = fileService ?? throw new ArgumentNullException(nameof(fileService));
+
+            this._cancellationTokenSource = new CancellationTokenSource();
+
+            //this._mainFormView.ConvertButtonText = CONVERT;
         }
 
         /// <inheritdoc />
-        public async Task ConvertUrlToMp3Async(string url, string savePath, CancellationToken cancellationToken = default)
+        public async Task ConvertUrlToMp3Async(string url, string savePath)
         {
             url.ThrowIfNull(nameof(url));
             url.ThrowIfEmpty(nameof(url));
@@ -47,17 +59,38 @@
             bool isValidUrl = this.IsValidYoutubeUrl(url);
             if (!isValidUrl)
             {
-                throw new FormatException($"The specified URL is not in the correct format or is not a valid YouTube URL: {url}");
+                throw new FormatException($"The specified URL is not in the correct format or is not a valid YouTube URL: '{url}'");
             }
 
             if (!this._fileService.DirectoryExists(savePath))
             {
-                throw new DirectoryNotFoundException($"The specified save path does not exist: {savePath}");
+                throw new DirectoryNotFoundException($"The specified save path does not exist: '{savePath}'");
             }
 
             this._mainFormView.TextBoxOutput += $"Starting conversion to mp3...{Environment.NewLine}";
 
-            await this._youtubeService.ConvertToMp3Async(url, savePath, cancellationToken).ConfigureAwait(false);
+            await this._youtubeService.ConvertToMp3Async(url, savePath, this._cancellationTokenSource.Token).ConfigureAwait(false);
+        }
+
+        /// <inheritdoc />
+        public void VerifyCancelConversion()
+        {
+            if (this._mainFormView.ConvertButtonText == "Cancel")
+            {
+                this.CancelConversion();
+                this._mainFormView.TextBoxOutput += $"The operation was cancelled.";
+                this._mainFormView.TextBoxUrlReadOnly = false;
+                this.UpdateConvertButtonText();
+                return;
+            }
+        }
+
+        /// <inheritdoc />
+        public void CancelConversion()
+        {
+            this._cancellationTokenSource.Cancel();
+            this._cancellationTokenSource.Dispose();
+            this._cancellationTokenSource = new CancellationTokenSource();
         }
 
         /// <summary>
@@ -71,6 +104,19 @@
             bool isYoutube = url.StartsWith("https://www.youtube.com/watch?v=", StringComparison.Ordinal);
 
             return isUrl && isYoutube;
+        }
+
+        /// <summary>
+        ///     Updates the convert button text based on the current value.
+        /// </summary>
+        private void UpdateConvertButtonText()
+        {
+            this._mainFormView.ConvertButtonText = this._mainFormView.ConvertButtonText switch
+            {
+                CONVERT => CANCEL,
+                CANCEL => CONVERT,
+                _ => throw new InvalidOperationException("The convert button has an invalid text value."),
+            };
         }
     }
 }

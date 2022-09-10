@@ -11,13 +11,18 @@
         string TextBoxUrl { get; set; }
 
         /// <summary>
+        ///     Gets and sets if the url textbox is editable.
+        /// </summary>
+        bool TextBoxUrlReadOnly { get; set; }
+
+        /// <summary>
         ///     Gets and sets the text in the output window.
         /// </summary>
         string TextBoxOutput { get; set; }
 
         /// <summary>
-        ///     Gets and sets the convert button enabled.
+        ///     Gets and sets the convert button text.
         /// </summary>
-        bool ButtonConvertEnabled { get; set; }
+        string ConvertButtonText { get; set; }
     }
 }

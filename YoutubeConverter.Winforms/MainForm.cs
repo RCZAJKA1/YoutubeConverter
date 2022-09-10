@@ -10,6 +10,9 @@
     /// </summary>
     public partial class MainForm : Form, IMainFormView
     {
+        private const string CONVERT = "Convert";
+        private const string CANCEL = "Cancel";
+
         /// <summary>
         ///     The converter controller.
         /// </summary>
@@ -37,6 +40,13 @@
         }
 
         /// <inheritdoc />
+        public bool TextBoxUrlReadOnly
+        {
+            get => this.textBoxUrl.ReadOnly;
+            set => this.textBoxUrl.EnsureControlThreadSynchronization(() => this.textBoxUrl.ReadOnly = value);
+        }
+
+        /// <inheritdoc />
         public string TextBoxOutput
         {
             get => this.textBoxOutput.Text;
@@ -44,10 +54,10 @@
         }
 
         /// <inheritdoc />
-        public bool ButtonConvertEnabled
+        public string ConvertButtonText
         {
-            get => this.buttonConvert.Enabled;
-            set => this.textBoxOutput.EnsureControlThreadSynchronization(() => this.buttonConvert.Enabled = value);
+            get => this.buttonConvert.Text;
+            set => this.buttonConvert.EnsureControlThreadSynchronization(() => this.buttonConvert.Text = value);
         }
 
         #endregion IMainFormView
@@ -61,27 +71,59 @@
         {
             try
             {
-                FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
-                folderBrowserDialog.ShowDialog();
+                if (this.ConvertButtonText == CANCEL)
+                {
+                    this._converterController.CancelConversion();
+                    this.TextBoxOutput += $"The operation was cancelled.";
+                    this.TextBoxUrlReadOnly = false;
+                    this.UpdateConvertButtonText();
+                    return;
+                }
 
+                if (string.IsNullOrEmpty(this.TextBoxUrl))
+                {
+                    throw new ArgumentEmptyException("The URL cannot be empty.", nameof(this.TextBoxUrl));
+                }
+
+                FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
+                DialogResult dialogResult = folderBrowserDialog.ShowDialog();
+                if (dialogResult != DialogResult.OK)
+                {
+                    this.TextBoxOutput += $"The operation was cancelled.{Environment.NewLine}";
+                    return;
+                }
+
+                this.UpdateConvertButtonText();
+                this.TextBoxUrlReadOnly = true;
                 this.TextBoxOutput = string.Empty;
-                this.ButtonConvertEnabled = false;
-                this.TextBoxOutput += $"Request to convert URL {this.TextBoxUrl} and save to path {folderBrowserDialog.SelectedPath}.{Environment.NewLine}";
+                this.TextBoxOutput += $"Request to convert URL '{this.textBoxUrl.Text}' and save to path '{folderBrowserDialog.SelectedPath}'.{Environment.NewLine}{Environment.NewLine}";
 
                 await this._converterController.ConvertUrlToMp3Async(this.TextBoxUrl, folderBrowserDialog.SelectedPath).ConfigureAwait(false);
 
-                this.TextBoxOutput += $"Success!{Environment.NewLine}";
+                this.TextBoxOutput += $"Success!{Environment.NewLine}{Environment.NewLine}";
             }
             catch (Exception ex)
             {
-                this.TextBoxOutput += $"Failed to convert file.{Environment.NewLine}{Environment.NewLine}";
-                this.TextBoxOutput += ex.Message;
+                this.TextBoxOutput += $"Failed to perform operation:{Environment.NewLine}";
+                this.TextBoxOutput += $"{ex.Message}{Environment.NewLine}";
             }
             finally
             {
-                this.ButtonConvertEnabled = true;
                 this.TextBoxUrl = string.Empty;
             }
+        }
+
+        /// <summary>
+        ///     Updates the convert button text based on the current value.
+        /// </summary>
+        private void UpdateConvertButtonText()
+        {
+            this.ConvertButtonText = this.ConvertButtonText switch
+            {
+                CONVERT => CANCEL,
+                CANCEL => CONVERT,
+                _ => throw new InvalidOperationException("The convert button has an invalid text value."),
+            };
         }
     }
 }

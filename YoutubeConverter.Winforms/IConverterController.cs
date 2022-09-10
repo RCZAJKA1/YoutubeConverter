@@ -1,6 +1,5 @@
 ﻿namespace YoutubeConverter
 {
-    using System.Threading;
     using System.Threading.Tasks;
 
     /// <summary>
@@ -13,8 +12,18 @@
         /// </summary>
         /// <param name="url">The URL of the YouTube video to convert.</param>
         /// <param name="savePath">The folder path to save the resulting mp3 file to.</param>
-        /// <param name="cancellationToken">The cancellation token to cancel the operation.</param>
         /// <returns>The <see cref="Task"/> that completed converting the URL to MP3.</returns>
-        Task ConvertUrlToMp3Async(string url, string savePath, CancellationToken cancellationToken = default);
+        Task ConvertUrlToMp3Async(string url, string savePath);
+
+        /// <summary>
+        ///     Verifies if the request is to cancel and cancels the conversion if necessary.
+        /// </summary>
+        void VerifyCancelConversion();
+
+        /// <summary>
+        ///     Cancels the currently running conversion.
+        /// </summary>
+        public void CancelConversion();
+
     }
 }

@@ -10,9 +10,12 @@
         public string TextBoxUrl { get; set; }
 
         /// <inheritdoc />
+        public bool TextBoxUrlReadOnly { get; set; }
+
+        /// <inheritdoc />
         public string TextBoxOutput { get; set; }
 
         /// <inheritdoc />
-        public bool ButtonConvertEnabled { get; set; }
+        public string ConvertButtonText { get; set; }
     }
 }
