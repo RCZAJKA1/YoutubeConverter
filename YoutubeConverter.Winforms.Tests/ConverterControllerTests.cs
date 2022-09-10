@@ -130,7 +130,7 @@
 
             FormatException exception = await Assert.ThrowsAsync<FormatException>(async () => await controller.ConvertUrlToMp3Async(url, savePath).ConfigureAwait(false)).ConfigureAwait(false);
 
-            Assert.Equal($"The specified URL is not in the correct format or is not a valid YouTube URL: {url}", exception.Message);
+            Assert.Equal($"The specified URL is not in the correct format or is not a valid YouTube URL: '{url}'", exception.Message);
 
             this._mockRepository.VerifyAll();
         }
@@ -147,7 +147,7 @@
 
             DirectoryNotFoundException exception = await Assert.ThrowsAsync<DirectoryNotFoundException>(async () => await controller.ConvertUrlToMp3Async(url, savePath).ConfigureAwait(false)).ConfigureAwait(false);
 
-            Assert.Equal($"The specified save path does not exist: {savePath}", exception.Message);
+            Assert.Equal($"The specified save path does not exist: '{savePath}'", exception.Message);
 
             this._mockRepository.VerifyAll();
         }
