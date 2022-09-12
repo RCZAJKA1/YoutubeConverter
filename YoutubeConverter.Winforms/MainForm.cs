@@ -1,6 +1,7 @@
 ﻿namespace YoutubeConverter
 {
     using System;
+    using System.Drawing;
     using System.Windows.Forms;
 
     using YoutubeConverter.Winforms;
@@ -60,6 +61,20 @@
             set => this.buttonConvert.EnsureControlThreadSynchronization(() => this.buttonConvert.Text = value);
         }
 
+        /// <inheritdoc />
+        public Color ConvertButtonBackgroundColor
+        {
+            get => this.buttonConvert.BackColor;
+            set => this.buttonConvert.EnsureControlThreadSynchronization(() => this.buttonConvert.BackColor = value);
+        }
+
+        /// <inheritdoc />
+        public string StatusLabelText
+        {
+            get => this.toolStripStatusLabelMain.Text;
+            set => this.toolStripStatusLabelMain.Text = value;
+        }
+
         #endregion IMainFormView
 
         /// <summary>
@@ -71,18 +86,22 @@
         {
             try
             {
+                ToolStripStatusLabel test = new ToolStripStatusLabel();
+
                 if (this.ConvertButtonText == CANCEL)
                 {
                     this._converterController.CancelConversion();
                     this.TextBoxOutput += $"The operation was cancelled.";
+                    this.StatusLabelText = "The operation was cancelled.";
                     this.TextBoxUrlReadOnly = false;
-                    this.UpdateConvertButtonText();
+                    this.UpdateConvertButtonStatus();
                     return;
                 }
 
-                if (string.IsNullOrEmpty(this.TextBoxUrl))
+                if (string.IsNullOrEmpty(this.TextBoxUrl) || !this._converterController.IsValidYoutubeUrl(this.TextBoxUrl))
                 {
-                    throw new ArgumentEmptyException("The URL cannot be empty.", nameof(this.TextBoxUrl));
+                    this.StatusLabelText = "Please enter a valid Youtube URL.";
+                    return;
                 }
 
                 FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
@@ -90,22 +109,29 @@
                 if (dialogResult != DialogResult.OK)
                 {
                     this.TextBoxOutput += $"The operation was cancelled.{Environment.NewLine}";
+                    this.StatusLabelText = "The operation was cancelled.";
+                    this.UpdateConvertButtonStatus();
                     return;
                 }
 
-                this.UpdateConvertButtonText();
+                this.UpdateConvertButtonStatus();
                 this.TextBoxUrlReadOnly = true;
                 this.TextBoxOutput = string.Empty;
                 this.TextBoxOutput += $"Request to convert URL '{this.textBoxUrl.Text}' and save to path '{folderBrowserDialog.SelectedPath}'.{Environment.NewLine}{Environment.NewLine}";
+                this.StatusLabelText = "Converting...";
 
                 await this._converterController.ConvertUrlToMp3Async(this.TextBoxUrl, folderBrowserDialog.SelectedPath).ConfigureAwait(false);
 
                 this.TextBoxOutput += $"Success!{Environment.NewLine}{Environment.NewLine}";
+                this.StatusLabelText = "Conversion successful.";
+                this.UpdateConvertButtonStatus();
             }
             catch (Exception ex)
             {
                 this.TextBoxOutput += $"Failed to perform operation:{Environment.NewLine}";
                 this.TextBoxOutput += $"{ex.Message}{Environment.NewLine}";
+                this.StatusLabelText = $"Error: {ex.Message}";
+                this.UpdateConvertButtonStatus();
             }
             finally
             {
@@ -114,16 +140,24 @@
         }
 
         /// <summary>
-        ///     Updates the convert button text based on the current value.
+        ///     Updates the convert button status based on the current text.
         /// </summary>
-        private void UpdateConvertButtonText()
+        private void UpdateConvertButtonStatus()
         {
-            this.ConvertButtonText = this.ConvertButtonText switch
+            // TODO: refactor to not rely on the text value
+            switch (this.ConvertButtonText)
             {
-                CONVERT => CANCEL,
-                CANCEL => CONVERT,
-                _ => throw new InvalidOperationException("The convert button has an invalid text value."),
-            };
+                case CONVERT:
+                    this.ConvertButtonText = CANCEL;
+                    this.ConvertButtonBackgroundColor = Color.Red;
+                    break;
+                case CANCEL:
+                    this.ConvertButtonText = CONVERT;
+                    this.ConvertButtonBackgroundColor = Color.LightGreen;
+                    break;
+                default:
+                    throw new InvalidOperationException("The convert button has an invalid text value.");
+            }
         }
     }
 }

@@ -37,5 +37,11 @@
         /// <param name="directoryPath">The directory path.</param>
         /// <returns><c>true</c> if the directory exists, otherwise <c>false</c>.</returns>
         bool DirectoryExists(string directoryPath);
+
+        /// <summary>
+        ///     Verfies if the file successfully downloaded and is not empty.
+        /// </summary>
+        /// <param name="filePath">The file path.</param>
+        void VerifySuccessfulDownload(string filePath);
     }
 }

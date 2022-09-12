@@ -29,7 +29,7 @@
         }
 
         /// <inheritdoc />
-        public async Task ConvertToMp3Async(string url, string savePath, CancellationToken cancellationToken = default)
+        public async Task<string> ConvertToMp3Async(string url, string savePath, CancellationToken cancellationToken = default)
         {
             url.ThrowIfNull(nameof(url));
             url.ThrowIfEmpty(nameof(url));
@@ -51,7 +51,8 @@
 
             MediaFile inputFile = new MediaFile { Filename = filePathMp4 };
             string filePathWithoutExtension = filePathMp4[..^4];
-            MediaFile outputFile = new MediaFile { Filename = $"{filePathWithoutExtension}.mp3" };
+            string mp3FileName = $"{filePathWithoutExtension}.mp3";
+            MediaFile outputFile = new MediaFile { Filename = mp3FileName };
 
             using Engine engine = new Engine();
             engine.GetMetadata(inputFile);
@@ -60,6 +61,8 @@
             engine.Convert(inputFile, outputFile);
 
             this._fileService.DeleteFile(filePathMp4);
+
+            return Path.Combine(savePath, mp3FileName);
         }
     }
 }

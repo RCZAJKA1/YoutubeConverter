@@ -56,8 +56,7 @@
             savePath.ThrowIfNull(nameof(savePath));
             savePath.ThrowIfEmpty(nameof(savePath));
 
-            bool isValidUrl = this.IsValidYoutubeUrl(url);
-            if (!isValidUrl)
+            if (!this.IsValidYoutubeUrl(url))
             {
                 throw new FormatException($"The specified URL is not in the correct format or is not a valid YouTube URL: '{url}'");
             }
@@ -69,7 +68,9 @@
 
             this._mainFormView.TextBoxOutput += $"Starting conversion to mp3...{Environment.NewLine}";
 
-            await this._youtubeService.ConvertToMp3Async(url, savePath, this._cancellationTokenSource.Token).ConfigureAwait(false);
+            string mp3FilePath = await this._youtubeService.ConvertToMp3Async(url, savePath, this._cancellationTokenSource.Token).ConfigureAwait(false);
+
+            this._fileService.VerifySuccessfulDownload(mp3FilePath);
         }
 
         /// <inheritdoc />
@@ -98,7 +99,7 @@
         /// </summary>
         /// <param name="url">The URL.</param>
         /// <returns><c>true</c> if the URL is a valid and correct URL, otherwise <c>false</c>.</returns>
-        private bool IsValidYoutubeUrl(string url)
+        public bool IsValidYoutubeUrl(string url)
         {
             bool isUrl = Uri.IsWellFormedUriString(url, UriKind.RelativeOrAbsolute);
             bool isYoutube = url.StartsWith("https://www.youtube.com/watch?v=", StringComparison.Ordinal);

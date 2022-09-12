@@ -1,5 +1,6 @@
 ﻿namespace YoutubeConverter
 {
+    using System;
     using System.IO;
     using System.Threading;
     using System.Threading.Tasks;
@@ -43,6 +44,22 @@
             directoryPath.ThrowIfEmpty(nameof(directoryPath));
 
             return Directory.Exists(directoryPath);
+        }
+
+        /// <inheritdoc />
+        public void VerifySuccessfulDownload(string filePath)
+        {
+            if (!File.Exists(filePath))
+            {
+                throw new FileNotFoundException($"The file download failed: '{filePath}'");
+            }
+
+            using FileStream stream = File.OpenRead(filePath);
+            if (stream.Length < 1)
+            {
+                // TODO: don't throw standard Exception
+                throw new Exception($"The file is empty: '{filePath}'");
+            }
         }
     }
 }

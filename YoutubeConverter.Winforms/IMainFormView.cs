@@ -1,5 +1,7 @@
 ﻿namespace YoutubeConverter
 {
+    using System.Drawing;
+
     /// <summary>
     ///     The main form view that provides access to form controls.
     /// </summary>
@@ -24,5 +26,15 @@
         ///     Gets and sets the convert button text.
         /// </summary>
         string ConvertButtonText { get; set; }
+
+        /// <summary>
+        ///     Gets and sets the convert button background color.
+        /// </summary>
+        Color ConvertButtonBackgroundColor { get; set; }
+
+        /// <summary>
+        ///     Gets and sets the status label text.
+        /// </summary>
+        string StatusLabelText { get; set; }
     }
 }

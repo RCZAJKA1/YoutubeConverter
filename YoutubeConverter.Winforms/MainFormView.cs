@@ -1,6 +1,7 @@
 ﻿namespace YoutubeConverter
 {
     using System.Diagnostics.CodeAnalysis;
+    using System.Drawing;
 
     /// <inheritdoc cref="IMainFormView"/>
     [ExcludeFromCodeCoverage]
@@ -17,5 +18,11 @@
 
         /// <inheritdoc />
         public string ConvertButtonText { get; set; }
+
+        /// <inheritdoc />
+        public Color ConvertButtonBackgroundColor { get; set; }
+
+        /// <inheritdoc />
+        public string StatusLabelText { get; set; }
     }
 }

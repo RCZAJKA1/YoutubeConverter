@@ -163,7 +163,7 @@
             this._mockMainFormView.Setup(x => x.TextBoxOutput).Returns(string.Empty);
             this._mockMainFormView.SetupSet(x => x.TextBoxOutput = this._mockMainFormView.Object.TextBoxOutput + $"Starting conversion to mp3...{Environment.NewLine}");
 
-            this._mockYoutubeService.Setup(x => x.ConvertToMp3Async(It.Is<string>(y => y == url), It.Is<string>(y => y == savePath), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
+            this._mockYoutubeService.Setup(x => x.ConvertToMp3Async(It.Is<string>(y => y == url), It.Is<string>(y => y == savePath), It.IsAny<CancellationToken>())).ReturnsAsync("test");
 
             ConverterController controller = this.CreateConverterController();
             await controller.ConvertUrlToMp3Async(url, savePath).ConfigureAwait(false);

@@ -23,7 +23,15 @@
         /// <summary>
         ///     Cancels the currently running conversion.
         /// </summary>
-        public void CancelConversion();
+        void CancelConversion();
+
+        /// <summary>
+        ///     Ensures that the specified URL is in the correct format and is a valid YouTube URL.
+        /// </summary>
+        /// <param name="url">The URL.</param>
+        /// <returns><c>true</c> if the URL is a valid and correct URL, otherwise <c>false</c>.</returns>
+        bool IsValidYoutubeUrl(string url);
+
 
     }
 }
