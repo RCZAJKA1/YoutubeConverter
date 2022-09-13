@@ -66,8 +66,6 @@
                 throw new DirectoryNotFoundException($"The specified save path does not exist: '{savePath}'");
             }
 
-            this._mainFormView.TextBoxOutput += $"Starting conversion to mp3...{Environment.NewLine}";
-
             string mp3FilePath = await this._youtubeService.ConvertToMp3Async(url, savePath, this._cancellationTokenSource.Token).ConfigureAwait(false);
 
             this._fileService.VerifySuccessfulDownload(mp3FilePath);
@@ -79,7 +77,6 @@
             if (this._mainFormView.ConvertButtonText == "Cancel")
             {
                 this.CancelConversion();
-                this._mainFormView.TextBoxOutput += $"The operation was cancelled.";
                 this._mainFormView.TextBoxUrlReadOnly = false;
                 this.UpdateConvertButtonText();
                 return;

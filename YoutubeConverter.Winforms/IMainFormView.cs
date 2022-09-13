@@ -18,11 +18,6 @@
         bool TextBoxUrlReadOnly { get; set; }
 
         /// <summary>
-        ///     Gets and sets the text in the output window.
-        /// </summary>
-        string TextBoxOutput { get; set; }
-
-        /// <summary>
         ///     Gets and sets the convert button text.
         /// </summary>
         string ConvertButtonText { get; set; }

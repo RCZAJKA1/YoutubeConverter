@@ -28,57 +28,33 @@
         /// </summary>
         private void InitializeComponent()
         {
-			this.labelUrl = new System.Windows.Forms.Label();
 			this.textBoxUrl = new System.Windows.Forms.TextBox();
-			this.textBoxOutput = new System.Windows.Forms.TextBox();
 			this.buttonConvert = new System.Windows.Forms.Button();
 			this.tableLayoutPanelMain = new System.Windows.Forms.TableLayoutPanel();
 			this.statusStripMain = new System.Windows.Forms.StatusStrip();
 			this.toolStripStatusLabelMain = new System.Windows.Forms.ToolStripStatusLabel();
+			this.label1 = new System.Windows.Forms.Label();
 			this.tableLayoutPanelMain.SuspendLayout();
 			this.statusStripMain.SuspendLayout();
 			this.SuspendLayout();
 			// 
-			// labelUrl
-			// 
-			this.labelUrl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.labelUrl.AutoSize = true;
-			this.labelUrl.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-			this.labelUrl.Location = new System.Drawing.Point(3, 58);
-			this.labelUrl.Name = "labelUrl";
-			this.labelUrl.Size = new System.Drawing.Size(72, 21);
-			this.labelUrl.TabIndex = 0;
-			this.labelUrl.Text = "URL:";
-			// 
 			// textBoxUrl
 			// 
-			this.textBoxUrl.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.tableLayoutPanelMain.SetColumnSpan(this.textBoxUrl, 4);
-			this.textBoxUrl.Location = new System.Drawing.Point(81, 57);
+			this.textBoxUrl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.tableLayoutPanelMain.SetColumnSpan(this.textBoxUrl, 8);
+			this.textBoxUrl.Location = new System.Drawing.Point(81, 149);
 			this.textBoxUrl.Name = "textBoxUrl";
 			this.textBoxUrl.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-			this.textBoxUrl.Size = new System.Drawing.Size(306, 23);
+			this.textBoxUrl.Size = new System.Drawing.Size(618, 23);
 			this.textBoxUrl.TabIndex = 0;
-			// 
-			// textBoxOutput
-			// 
-			this.tableLayoutPanelMain.SetColumnSpan(this.textBoxOutput, 5);
-			this.textBoxOutput.Location = new System.Drawing.Point(393, 49);
-			this.textBoxOutput.Multiline = true;
-			this.textBoxOutput.Name = "textBoxOutput";
-			this.textBoxOutput.ReadOnly = true;
-			this.tableLayoutPanelMain.SetRowSpan(this.textBoxOutput, 8);
-			this.textBoxOutput.Size = new System.Drawing.Size(388, 382);
-			this.textBoxOutput.TabIndex = 2;
 			// 
 			// buttonConvert
 			// 
 			this.buttonConvert.BackColor = System.Drawing.Color.LightGreen;
 			this.tableLayoutPanelMain.SetColumnSpan(this.buttonConvert, 2);
-			this.buttonConvert.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.buttonConvert.Location = new System.Drawing.Point(3, 371);
+			this.buttonConvert.Location = new System.Drawing.Point(315, 233);
 			this.buttonConvert.Name = "buttonConvert";
-			this.buttonConvert.Size = new System.Drawing.Size(150, 60);
+			this.buttonConvert.Size = new System.Drawing.Size(150, 47);
 			this.buttonConvert.TabIndex = 3;
 			this.buttonConvert.Text = "Convert";
 			this.buttonConvert.UseVisualStyleBackColor = false;
@@ -97,11 +73,10 @@
 			this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
 			this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
 			this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-			this.tableLayoutPanelMain.Controls.Add(this.labelUrl, 0, 1);
-			this.tableLayoutPanelMain.Controls.Add(this.buttonConvert, 0, 8);
-			this.tableLayoutPanelMain.Controls.Add(this.textBoxUrl, 1, 1);
-			this.tableLayoutPanelMain.Controls.Add(this.textBoxOutput, 5, 1);
 			this.tableLayoutPanelMain.Controls.Add(this.statusStripMain, 0, 9);
+			this.tableLayoutPanelMain.Controls.Add(this.buttonConvert, 4, 5);
+			this.tableLayoutPanelMain.Controls.Add(this.textBoxUrl, 1, 3);
+			this.tableLayoutPanelMain.Controls.Add(this.label1, 4, 2);
 			this.tableLayoutPanelMain.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutPanelMain.Location = new System.Drawing.Point(0, 0);
 			this.tableLayoutPanelMain.Name = "tableLayoutPanelMain";
@@ -111,10 +86,10 @@
 			this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
 			this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
 			this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-			this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-			this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-			this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-			this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.53362F));
+			this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 11.49675F));
+			this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 11.27983F));
+			this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 11.71367F));
+			this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.761388F));
 			this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5.639913F));
 			this.tableLayoutPanelMain.Size = new System.Drawing.Size(784, 461);
 			this.tableLayoutPanelMain.TabIndex = 4;
@@ -132,10 +107,23 @@
 			// 
 			// toolStripStatusLabelMain
 			// 
-			this.toolStripStatusLabelMain.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+			this.toolStripStatusLabelMain.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.toolStripStatusLabelMain.Name = "toolStripStatusLabelMain";
-			this.toolStripStatusLabelMain.Size = new System.Drawing.Size(41, 17);
+			this.toolStripStatusLabelMain.Size = new System.Drawing.Size(39, 17);
 			this.toolStripStatusLabelMain.Text = "Ready";
+			// 
+			// label1
+			// 
+			this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.label1.AutoSize = true;
+			this.tableLayoutPanelMain.SetColumnSpan(this.label1, 2);
+			this.label1.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.label1.Location = new System.Drawing.Point(315, 102);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(150, 25);
+			this.label1.TabIndex = 5;
+			this.label1.Text = "YouTube URL";
+			this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// MainForm
 			// 
@@ -156,13 +144,11 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Label labelUrl;
         private System.Windows.Forms.TextBox textBoxUrl;
-        private System.Windows.Forms.TextBox textBoxOutput;
         private System.Windows.Forms.Button buttonConvert;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanelMain;
 		private System.Windows.Forms.StatusStrip statusStripMain;
 		private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelMain;
+		private System.Windows.Forms.Label label1;
 	}
 }

@@ -48,13 +48,6 @@
         }
 
         /// <inheritdoc />
-        public string TextBoxOutput
-        {
-            get => this.textBoxOutput.Text;
-            set => this.textBoxOutput.EnsureControlThreadSynchronization(() => this.textBoxOutput.Text = value);
-        }
-
-        /// <inheritdoc />
         public string ConvertButtonText
         {
             get => this.buttonConvert.Text;
@@ -91,7 +84,6 @@
                 if (this.ConvertButtonText == CANCEL)
                 {
                     this._converterController.CancelConversion();
-                    this.TextBoxOutput += $"The operation was cancelled.";
                     this.StatusLabelText = "The operation was cancelled.";
                     this.TextBoxUrlReadOnly = false;
                     this.UpdateConvertButtonStatus();
@@ -108,7 +100,6 @@
                 DialogResult dialogResult = folderBrowserDialog.ShowDialog();
                 if (dialogResult != DialogResult.OK)
                 {
-                    this.TextBoxOutput += $"The operation was cancelled.{Environment.NewLine}";
                     this.StatusLabelText = "The operation was cancelled.";
                     this.UpdateConvertButtonStatus();
                     return;
@@ -116,20 +107,15 @@
 
                 this.UpdateConvertButtonStatus();
                 this.TextBoxUrlReadOnly = true;
-                this.TextBoxOutput = string.Empty;
-                this.TextBoxOutput += $"Request to convert URL '{this.textBoxUrl.Text}' and save to path '{folderBrowserDialog.SelectedPath}'.{Environment.NewLine}{Environment.NewLine}";
                 this.StatusLabelText = "Converting...";
 
                 await this._converterController.ConvertUrlToMp3Async(this.TextBoxUrl, folderBrowserDialog.SelectedPath).ConfigureAwait(false);
 
-                this.TextBoxOutput += $"Success!{Environment.NewLine}{Environment.NewLine}";
                 this.StatusLabelText = "Conversion successful.";
                 this.UpdateConvertButtonStatus();
             }
             catch (Exception ex)
             {
-                this.TextBoxOutput += $"Failed to perform operation:{Environment.NewLine}";
-                this.TextBoxOutput += $"{ex.Message}{Environment.NewLine}";
                 this.StatusLabelText = $"Error: {ex.Message}";
                 this.UpdateConvertButtonStatus();
             }
