@@ -42,7 +42,7 @@
 			// 
 			this.textBoxUrl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.tableLayoutPanelMain.SetColumnSpan(this.textBoxUrl, 8);
-			this.textBoxUrl.Location = new System.Drawing.Point(81, 149);
+			this.textBoxUrl.Location = new System.Drawing.Point(81, 195);
 			this.textBoxUrl.Name = "textBoxUrl";
 			this.textBoxUrl.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this.textBoxUrl.Size = new System.Drawing.Size(618, 23);
@@ -50,6 +50,7 @@
 			// 
 			// buttonConvert
 			// 
+			this.buttonConvert.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.buttonConvert.BackColor = System.Drawing.Color.LightGreen;
 			this.tableLayoutPanelMain.SetColumnSpan(this.buttonConvert, 2);
 			this.buttonConvert.Location = new System.Drawing.Point(315, 233);
@@ -75,8 +76,8 @@
 			this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
 			this.tableLayoutPanelMain.Controls.Add(this.statusStripMain, 0, 9);
 			this.tableLayoutPanelMain.Controls.Add(this.buttonConvert, 4, 5);
-			this.tableLayoutPanelMain.Controls.Add(this.textBoxUrl, 1, 3);
-			this.tableLayoutPanelMain.Controls.Add(this.label1, 4, 2);
+			this.tableLayoutPanelMain.Controls.Add(this.textBoxUrl, 1, 4);
+			this.tableLayoutPanelMain.Controls.Add(this.label1, 4, 3);
 			this.tableLayoutPanelMain.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutPanelMain.Location = new System.Drawing.Point(0, 0);
 			this.tableLayoutPanelMain.Name = "tableLayoutPanelMain";
@@ -118,7 +119,7 @@
 			this.label1.AutoSize = true;
 			this.tableLayoutPanelMain.SetColumnSpan(this.label1, 2);
 			this.label1.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-			this.label1.Location = new System.Drawing.Point(315, 102);
+			this.label1.Location = new System.Drawing.Point(315, 148);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(150, 25);
 			this.label1.TabIndex = 5;
@@ -131,6 +132,8 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(784, 461);
 			this.Controls.Add(this.tableLayoutPanelMain);
+			this.MaximizeBox = false;
+			this.MaximumSize = new System.Drawing.Size(800, 500);
 			this.MinimumSize = new System.Drawing.Size(800, 500);
 			this.Name = "MainForm";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
