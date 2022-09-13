@@ -65,7 +65,7 @@
         public string StatusLabelText
         {
             get => this.toolStripStatusLabelMain.Text;
-            set => this.toolStripStatusLabelMain.Text = value;
+            set => this.statusStripMain.EnsureControlThreadSynchronization(() => this.toolStripStatusLabelMain.Text = value);
         }
 
         #endregion IMainFormView
@@ -122,6 +122,7 @@
             finally
             {
                 this.TextBoxUrl = string.Empty;
+                this.TextBoxUrlReadOnly = false;
             }
         }
 
