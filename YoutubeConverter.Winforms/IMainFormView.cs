@@ -1,5 +1,7 @@
 ﻿namespace YoutubeConverter
 {
+    using System.Drawing;
+
     /// <summary>
     ///     The main form view that provides access to form controls.
     /// </summary>
@@ -11,13 +13,23 @@
         string TextBoxUrl { get; set; }
 
         /// <summary>
-        ///     Gets and sets the text in the output window.
+        ///     Gets and sets if the url textbox is editable.
         /// </summary>
-        string TextBoxOutput { get; set; }
+        bool TextBoxUrlReadOnly { get; set; }
 
         /// <summary>
-        ///     Gets and sets the convert button enabled.
+        ///     Gets and sets the convert button text.
         /// </summary>
-        bool ButtonConvertEnabled { get; set; }
+        string ConvertButtonText { get; set; }
+
+        /// <summary>
+        ///     Gets and sets the convert button background color.
+        /// </summary>
+        Color ConvertButtonBackgroundColor { get; set; }
+
+        /// <summary>
+        ///     Gets and sets the status label text.
+        /// </summary>
+        string StatusLabelText { get; set; }
     }
 }
