@@ -56,7 +56,7 @@
 			this.buttonConvert.Location = new System.Drawing.Point(315, 233);
 			this.buttonConvert.Name = "buttonConvert";
 			this.buttonConvert.Size = new System.Drawing.Size(150, 47);
-			this.buttonConvert.TabIndex = 3;
+			this.buttonConvert.TabIndex = 1;
 			this.buttonConvert.Text = "Convert";
 			this.buttonConvert.UseVisualStyleBackColor = false;
 			this.buttonConvert.Click += new System.EventHandler(this.ButtonConvert_Click);
@@ -128,6 +128,7 @@
 			// 
 			// MainForm
 			// 
+			this.AcceptButton = this.buttonConvert;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(784, 461);
