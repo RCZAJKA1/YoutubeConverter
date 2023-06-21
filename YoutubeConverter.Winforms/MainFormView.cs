@@ -24,5 +24,8 @@
 
         /// <inheritdoc />
         public string StatusLabelText { get; set; }
+
+        /// <inheritdoc />
+        public OutputType OutputType { get; set; }
     }
 }

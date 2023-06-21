@@ -29,6 +29,8 @@
             this._converterController = converterController ?? throw new ArgumentNullException(nameof(converterController));
 
             this.InitializeComponent();
+
+            this.InitializeData();
         }
 
         #region IMainFormView
@@ -66,6 +68,21 @@
         {
             get => this.toolStripStatusLabelMain.Text;
             set => this.statusStripMain.EnsureControlThreadSynchronization(() => this.toolStripStatusLabelMain.Text = value);
+        }
+
+        /// <inheritdoc />
+        public OutputType OutputType
+        {
+            get
+            {
+                Enum.TryParse(this.comboBoxOutputType.SelectedValue.ToString(), out OutputType outputType);
+                return outputType;
+            }
+            set => this.comboBoxOutputType.EnsureControlThreadSynchronization(() =>
+            {
+                this.comboBoxOutputType.SelectedValue = value;
+                this.comboBoxOutputType.Text = value.ToString();
+            });
         }
 
         #endregion IMainFormView
@@ -145,6 +162,14 @@
                 default:
                     throw new InvalidOperationException("The convert button has an invalid text value.");
             }
+        }
+
+        /// <summary>
+        ///     Populates component data sources and sets default values.
+        /// </summary>
+        private void InitializeData()
+        {
+            this.comboBoxOutputType.DataSource = Enum.GetValues(typeof(OutputType));
         }
     }
 }

@@ -31,5 +31,10 @@
         ///     Gets and sets the status label text.
         /// </summary>
         string StatusLabelText { get; set; }
+
+        /// <summary>
+        ///     Gets and sets the file output type.
+        /// </summary>
+        OutputType OutputType { get; set; }
     }
 }
