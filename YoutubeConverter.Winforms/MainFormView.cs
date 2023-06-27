@@ -27,5 +27,8 @@
 
         /// <inheritdoc />
         public OutputType OutputType { get; set; }
+
+        /// <inheritdoc />
+        public string FileName { get; set; }
     }
 }

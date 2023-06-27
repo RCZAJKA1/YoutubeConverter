@@ -65,13 +65,13 @@
         }
 
         [Fact]
-        public async Task ConvertUrlToMp3Async_UrlNull_ThrowsAsync()
+        public async Task ConvertUrlToVideoAsync_UrlNull_ThrowsAsync()
         {
             string savePath = "testSavePath";
 
             ConverterController controller = this.CreateConverterController();
 
-            ArgumentNullException exception = await Assert.ThrowsAsync<ArgumentNullException>(async () => await controller.ConvertUrlToMp3Async(null, savePath).ConfigureAwait(false)).ConfigureAwait(false);
+            ArgumentNullException exception = await Assert.ThrowsAsync<ArgumentNullException>(async () => await controller.ConvertUrlToVideoAsync(null, savePath).ConfigureAwait(false)).ConfigureAwait(false);
 
             Assert.Equal("Value cannot be null. (Parameter 'url')", exception.Message);
 
@@ -79,13 +79,13 @@
         }
 
         [Fact]
-        public async Task ConvertUrlToMp3Async_UrlEmpty_ThrowsAsync()
+        public async Task ConvertUrlToVideoAsync_UrlEmpty_ThrowsAsync()
         {
             string savePath = "testSavePath";
 
             ConverterController controller = this.CreateConverterController();
 
-            ArgumentEmptyException exception = await Assert.ThrowsAsync<ArgumentEmptyException>(async () => await controller.ConvertUrlToMp3Async(string.Empty, savePath).ConfigureAwait(false)).ConfigureAwait(false);
+            ArgumentEmptyException exception = await Assert.ThrowsAsync<ArgumentEmptyException>(async () => await controller.ConvertUrlToVideoAsync(string.Empty, savePath).ConfigureAwait(false)).ConfigureAwait(false);
 
             Assert.Equal("url", exception.Message);
 
@@ -93,13 +93,13 @@
         }
 
         [Fact]
-        public async Task ConvertUrlToMp3Async_SavePathNull_ThrowsAsync()
+        public async Task ConvertUrlToVideoAsync_SavePathNull_ThrowsAsync()
         {
             string url = "https://google.com/";
 
             ConverterController controller = this.CreateConverterController();
 
-            ArgumentNullException exception = await Assert.ThrowsAsync<ArgumentNullException>(async () => await controller.ConvertUrlToMp3Async(url, null).ConfigureAwait(false)).ConfigureAwait(false);
+            ArgumentNullException exception = await Assert.ThrowsAsync<ArgumentNullException>(async () => await controller.ConvertUrlToVideoAsync(url, null).ConfigureAwait(false)).ConfigureAwait(false);
 
             Assert.Equal("Value cannot be null. (Parameter 'savePath')", exception.Message);
 
@@ -107,13 +107,13 @@
         }
 
         [Fact]
-        public async Task ConvertUrlToMp3Async_SavePathEmpty_ThrowsAsync()
+        public async Task ConvertUrlToVideoAsync_SavePathEmpty_ThrowsAsync()
         {
             string url = "https://google.com/";
 
             ConverterController controller = this.CreateConverterController();
 
-            ArgumentEmptyException exception = await Assert.ThrowsAsync<ArgumentEmptyException>(async () => await controller.ConvertUrlToMp3Async(url, string.Empty).ConfigureAwait(false)).ConfigureAwait(false);
+            ArgumentEmptyException exception = await Assert.ThrowsAsync<ArgumentEmptyException>(async () => await controller.ConvertUrlToVideoAsync(url, string.Empty).ConfigureAwait(false)).ConfigureAwait(false);
 
             Assert.Equal("savePath", exception.Message);
 
@@ -121,14 +121,14 @@
         }
 
         [Fact]
-        public async Task ConvertUrlToMp3Async_UrlNotYoutubeFormatted_ThrowsAsync()
+        public async Task ConvertUrlToVideoAsync_UrlNotYoutubeFormatted_ThrowsAsync()
         {
             string url = "https://google.com/";
             string savePath = "testSavePath";
 
             ConverterController controller = this.CreateConverterController();
 
-            FormatException exception = await Assert.ThrowsAsync<FormatException>(async () => await controller.ConvertUrlToMp3Async(url, savePath).ConfigureAwait(false)).ConfigureAwait(false);
+            FormatException exception = await Assert.ThrowsAsync<FormatException>(async () => await controller.ConvertUrlToVideoAsync(url, savePath).ConfigureAwait(false)).ConfigureAwait(false);
 
             Assert.Equal($"The specified URL is not in the correct format or is not a valid YouTube URL: '{url}'", exception.Message);
 
@@ -136,7 +136,7 @@
         }
 
         [Fact]
-        public async Task ConvertUrlToMp3Async_DirectoryDoesNotExist_ThrowsAsync()
+        public async Task ConvertUrlToVideoAsync_DirectoryDoesNotExist_ThrowsAsync()
         {
             string url = "https://www.youtube.com/watch?v=";
             string savePath = "testSavePath";
@@ -145,7 +145,7 @@
 
             ConverterController controller = this.CreateConverterController();
 
-            DirectoryNotFoundException exception = await Assert.ThrowsAsync<DirectoryNotFoundException>(async () => await controller.ConvertUrlToMp3Async(url, savePath).ConfigureAwait(false)).ConfigureAwait(false);
+            DirectoryNotFoundException exception = await Assert.ThrowsAsync<DirectoryNotFoundException>(async () => await controller.ConvertUrlToVideoAsync(url, savePath).ConfigureAwait(false)).ConfigureAwait(false);
 
             Assert.Equal($"The specified save path does not exist: '{savePath}'", exception.Message);
 
@@ -153,17 +153,19 @@
         }
 
         [Fact]
-        public async Task ConvertUrlToMp3Async_DirectoryExists_ConvertsToMp3Async()
+        public async Task ConvertUrlToVideoAsync_DirectoryExists_ConvertsToMp3Async()
         {
             string url = "https://www.youtube.com/watch?v=";
             string savePath = "testSavePath";
+            string fileName = "testFileName";
+            OutputType outputType = OutputType.mp3;
 
             this._mockFileService.Setup(x => x.DirectoryExists(It.Is<string>(y => y == savePath))).Returns(true);
 
-            this._mockYoutubeService.Setup(x => x.ConvertToMp3Async(It.Is<string>(y => y == url), It.Is<string>(y => y == savePath), It.IsAny<CancellationToken>())).ReturnsAsync("test");
+            this._mockYoutubeService.Setup(x => x.DownloadVideoAsync(It.Is<string>(y => y == url), It.Is<string>(y => y == savePath), It.Is<string>(y => y == fileName), It.Is<OutputType>(y => y == outputType), It.IsAny<CancellationToken>())).ReturnsAsync("test");
 
             ConverterController controller = this.CreateConverterController();
-            await controller.ConvertUrlToMp3Async(url, savePath).ConfigureAwait(false);
+            await controller.ConvertUrlToVideoAsync(url, savePath).ConfigureAwait(false);
 
             this._mockRepository.VerifyAll();
         }

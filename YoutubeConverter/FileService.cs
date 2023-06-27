@@ -34,6 +34,11 @@
             filePath.ThrowIfNull(nameof(filePath));
             filePath.ThrowIfEmpty(nameof(filePath));
 
+            if (!File.Exists(filePath))
+            {
+                return;
+            }
+
             File.Delete(filePath);
         }
 
@@ -51,7 +56,7 @@
         {
             if (!File.Exists(filePath))
             {
-                throw new FileNotFoundException($"The file download failed: '{filePath}'");
+                throw new FileNotFoundException($"The file does not exist: '{filePath}'");
             }
 
             using FileStream stream = File.OpenRead(filePath);

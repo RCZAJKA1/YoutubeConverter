@@ -36,5 +36,10 @@
         ///     Gets and sets the file output type.
         /// </summary>
         OutputType OutputType { get; set; }
+
+        /// <summary>
+        ///     Gets and sets the file name.
+        /// </summary>
+        string FileName { get; set; }
     }
 }

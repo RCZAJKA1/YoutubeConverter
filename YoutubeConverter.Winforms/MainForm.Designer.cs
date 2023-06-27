@@ -34,10 +34,12 @@
             this.label2 = new System.Windows.Forms.Label();
             this.statusStripMain = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabelMain = new System.Windows.Forms.ToolStripStatusLabel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.labelUrl = new System.Windows.Forms.Label();
+            this.labelOutputType = new System.Windows.Forms.Label();
             this.comboBoxOutputType = new System.Windows.Forms.ComboBox();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.labelFileName = new System.Windows.Forms.Label();
+            this.textBoxFileName = new System.Windows.Forms.TextBox();
             this.tableLayoutPanelMain.SuspendLayout();
             this.statusStripMain.SuspendLayout();
             this.SuspendLayout();
@@ -81,11 +83,13 @@
             this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.tableLayoutPanelMain.Controls.Add(this.label2, 0, 9);
             this.tableLayoutPanelMain.Controls.Add(this.statusStripMain, 0, 9);
-            this.tableLayoutPanelMain.Controls.Add(this.label1, 0, 1);
+            this.tableLayoutPanelMain.Controls.Add(this.labelUrl, 0, 1);
             this.tableLayoutPanelMain.Controls.Add(this.textBoxUrl, 2, 1);
             this.tableLayoutPanelMain.Controls.Add(this.buttonConvert, 4, 8);
-            this.tableLayoutPanelMain.Controls.Add(this.label3, 0, 2);
+            this.tableLayoutPanelMain.Controls.Add(this.labelOutputType, 0, 2);
             this.tableLayoutPanelMain.Controls.Add(this.comboBoxOutputType, 2, 2);
+            this.tableLayoutPanelMain.Controls.Add(this.labelFileName, 0, 3);
+            this.tableLayoutPanelMain.Controls.Add(this.textBoxFileName, 2, 3);
             this.tableLayoutPanelMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanelMain.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanelMain.Name = "tableLayoutPanelMain";
@@ -128,31 +132,31 @@
             this.toolStripStatusLabelMain.Size = new System.Drawing.Size(39, 17);
             this.toolStripStatusLabelMain.Text = "Ready";
             // 
-            // label1
+            // labelUrl
             // 
-            this.label1.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            this.label1.AutoSize = true;
-            this.tableLayoutPanelMain.SetColumnSpan(this.label1, 2);
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(3, 53);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(150, 25);
-            this.label1.TabIndex = 5;
-            this.label1.Text = "YouTube URL";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.labelUrl.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            this.labelUrl.AutoSize = true;
+            this.tableLayoutPanelMain.SetColumnSpan(this.labelUrl, 2);
+            this.labelUrl.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.labelUrl.Location = new System.Drawing.Point(3, 53);
+            this.labelUrl.Name = "labelUrl";
+            this.labelUrl.Size = new System.Drawing.Size(150, 25);
+            this.labelUrl.TabIndex = 5;
+            this.labelUrl.Text = "YouTube URL";
+            this.labelUrl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // label3
+            // labelOutputType
             // 
-            this.label3.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            this.label3.AutoSize = true;
-            this.tableLayoutPanelMain.SetColumnSpan(this.label3, 2);
-            this.label3.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label3.Location = new System.Drawing.Point(3, 97);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(150, 25);
-            this.label3.TabIndex = 6;
-            this.label3.Text = "Output Type";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.labelOutputType.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            this.labelOutputType.AutoSize = true;
+            this.tableLayoutPanelMain.SetColumnSpan(this.labelOutputType, 2);
+            this.labelOutputType.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.labelOutputType.Location = new System.Drawing.Point(3, 97);
+            this.labelOutputType.Name = "labelOutputType";
+            this.labelOutputType.Size = new System.Drawing.Size(150, 25);
+            this.labelOutputType.TabIndex = 6;
+            this.labelOutputType.Text = "Output Type";
+            this.labelOutputType.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // comboBoxOutputType
             // 
@@ -164,6 +168,30 @@
             this.comboBoxOutputType.Name = "comboBoxOutputType";
             this.comboBoxOutputType.Size = new System.Drawing.Size(150, 23);
             this.comboBoxOutputType.TabIndex = 7;
+            // 
+            // labelFileName
+            // 
+            this.labelFileName.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            this.labelFileName.AutoSize = true;
+            this.tableLayoutPanelMain.SetColumnSpan(this.labelFileName, 2);
+            this.labelFileName.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.labelFileName.Location = new System.Drawing.Point(3, 141);
+            this.labelFileName.Name = "labelFileName";
+            this.labelFileName.Size = new System.Drawing.Size(150, 25);
+            this.labelFileName.TabIndex = 6;
+            this.labelFileName.Text = "File Name";
+            this.labelFileName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // textBoxFileName
+            // 
+            this.textBoxFileName.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            this.tableLayoutPanelMain.SetColumnSpan(this.textBoxFileName, 6);
+            this.textBoxFileName.Location = new System.Drawing.Point(159, 142);
+            this.textBoxFileName.Name = "textBoxFileName";
+            this.textBoxFileName.PlaceholderText = "Artist - Song";
+            this.textBoxFileName.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBoxFileName.Size = new System.Drawing.Size(462, 23);
+            this.textBoxFileName.TabIndex = 0;
             // 
             // MainForm
             // 
@@ -191,10 +219,12 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelMain;
         private System.Windows.Forms.StatusStrip statusStripMain;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelMain;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label labelUrl;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label labelOutputType;
         private System.Windows.Forms.ComboBox comboBoxOutputType;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.Label labelFileName;
+        private System.Windows.Forms.TextBox textBoxFileName;
     }
 }

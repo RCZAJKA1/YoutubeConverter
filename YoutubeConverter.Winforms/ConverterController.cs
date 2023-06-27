@@ -49,7 +49,7 @@
         }
 
         /// <inheritdoc />
-        public async Task ConvertUrlToMp3Async(string url, string savePath)
+        public async Task ConvertUrlToVideoAsync(string url, string savePath, string fileName = null, OutputType outputType = OutputType.mp3)
         {
             url.ThrowIfNull(nameof(url));
             url.ThrowIfEmpty(nameof(url));
@@ -66,7 +66,7 @@
                 throw new DirectoryNotFoundException($"The specified save path does not exist: '{savePath}'");
             }
 
-            string mp3FilePath = await this._youtubeService.ConvertToMp3Async(url, savePath, this._cancellationTokenSource.Token).ConfigureAwait(false);
+            string mp3FilePath = await this._youtubeService.DownloadVideoAsync(url, savePath, fileName, outputType, this._cancellationTokenSource.Token).ConfigureAwait(false);
 
             this._fileService.VerifySuccessfulDownload(mp3FilePath);
         }

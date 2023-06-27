@@ -1,5 +1,6 @@
 ﻿namespace YoutubeConverter
 {
+    using System.Threading;
     using System.Threading.Tasks;
 
     /// <summary>
@@ -8,12 +9,14 @@
     public interface IConverterController
     {
         /// <summary>
-        ///     Converts the specified Youtube URL to an mp3 file.
+        ///     Downloads the specified YouTube video to the local machine.
         /// </summary>
         /// <param name="url">The URL of the YouTube video to convert.</param>
         /// <param name="savePath">The folder path to save the resulting mp3 file to.</param>
+        /// <param name="fileName">The file name.</param>
+        /// <param name="outputType">The output file type.</param>
         /// <returns>The <see cref="Task"/> that completed converting the URL to MP3.</returns>
-        Task ConvertUrlToMp3Async(string url, string savePath);
+        Task ConvertUrlToVideoAsync(string url, string savePath, string fileName = null, OutputType outputType = OutputType.mp3);
 
         /// <summary>
         ///     Verifies if the request is to cancel and cancels the conversion if necessary.
@@ -31,7 +34,5 @@
         /// <param name="url">The URL.</param>
         /// <returns><c>true</c> if the URL is a valid and correct URL, otherwise <c>false</c>.</returns>
         bool IsValidYoutubeUrl(string url);
-
-
     }
 }

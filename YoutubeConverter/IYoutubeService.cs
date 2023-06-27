@@ -14,12 +14,13 @@ namespace YoutubeConverter
     public interface IYoutubeService
     {
         /// <summary>
-        ///     Converts the specified YouTube into an mp3 and saves to the specified folder path.
+        ///     Downloads the YouTube video to the specified folder path.
         /// </summary>
         /// <param name="url">The URL of the video to convert..</param>
-        /// <param name="savePath">The folder path to save the mp3.</param>
+        /// <param name="savePath">The folder path to save the video.</param>
+        /// <param name="fileName">The file name.</param>
         /// <param name="cancellationToken">The cancellation token to cancel the operation.</param>
         /// <returns>A <see cref="string"/> containing the downloaded mp3 file path.</returns>
-        Task<string> ConvertToMp3Async(string url, string savePath, CancellationToken cancellationToken = default);
+        Task<string> DownloadVideoAsync(string url, string savePath, string fileName = null, OutputType outputType = OutputType.mp3, CancellationToken cancellationToken = default);
     }
 }

@@ -29,7 +29,7 @@
         }
 
         /// <inheritdoc />
-        public async Task<string> ConvertToMp3Async(string url, string savePath, CancellationToken cancellationToken = default)
+        public async Task<string> DownloadVideoAsync(string url, string savePath, string fileName = null, OutputType outputType = OutputType.mp3, CancellationToken cancellationToken = default)
         {
             url.ThrowIfNull(nameof(url));
             url.ThrowIfEmpty(nameof(url));
@@ -42,27 +42,42 @@
             }
 
             YouTube youtube = YouTube.Default;
-            YouTubeVideo vid = await youtube.GetVideoAsync(url).ConfigureAwait(false);
-            string filePathMp4 = Path.Combine(savePath, vid.FullName);
-            byte[] videoBytes = await vid.GetBytesAsync().ConfigureAwait(false);
+            YouTubeVideo youtubeVideo = await youtube.GetVideoAsync(url).ConfigureAwait(false);
+            string filePathMp4 = Path.Combine(savePath, youtubeVideo.FullName);
+            byte[] videoBytes = await youtubeVideo.GetBytesAsync().ConfigureAwait(false);
 
             // Write .mp4 file to disk
             await this._fileService.WriteAllBytesAsync(filePathMp4, videoBytes, cancellationToken).ConfigureAwait(false);
 
             MediaFile inputFile = new MediaFile { Filename = filePathMp4 };
             string filePathWithoutExtension = filePathMp4[..^4];
-            string mp3FileName = $"{filePathWithoutExtension}.mp3";
-            MediaFile outputFile = new MediaFile { Filename = mp3FileName };
+
+            // TODO: avoid direct file type conversion to prevent potential file corruption
+            string desiredFileName;
+            switch (outputType)
+            {
+                case OutputType.mp4:
+                    desiredFileName = filePathMp4;
+                    break;
+                case OutputType.wav:
+                    desiredFileName = $"{filePathWithoutExtension}.wav";
+                    break;
+                default:
+                    desiredFileName = $"{filePathWithoutExtension}.mp3";
+                    break;
+            }
+
+            MediaFile outputFile = new MediaFile { Filename = desiredFileName };
 
             using Engine engine = new Engine();
             engine.GetMetadata(inputFile);
 
-            // Convert .mp4 file into new .mp3 file and write to disk
+            // Convert original .mp4 file into desired file type
             engine.Convert(inputFile, outputFile);
 
             this._fileService.DeleteFile(filePathMp4);
 
-            return Path.Combine(savePath, mp3FileName);
+            return Path.Combine(savePath, desiredFileName);
         }
     }
 }

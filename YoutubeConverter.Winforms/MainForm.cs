@@ -2,6 +2,8 @@
 {
     using System;
     using System.Drawing;
+    using System.Linq;
+    using System.Threading;
     using System.Windows.Forms;
 
     using YoutubeConverter.Winforms;
@@ -85,6 +87,13 @@
             });
         }
 
+        /// <inheritdoc />
+        public string FileName
+        {
+            get => this.textBoxFileName.Text;
+            set => this.textBoxFileName.EnsureControlThreadSynchronization(() => this.textBoxFileName.Text = value);
+        }
+
         #endregion IMainFormView
 
         /// <summary>
@@ -96,8 +105,6 @@
         {
             try
             {
-                ToolStripStatusLabel test = new ToolStripStatusLabel();
-
                 if (this.ConvertButtonText == CANCEL)
                 {
                     this._converterController.CancelConversion();
@@ -107,9 +114,10 @@
                     return;
                 }
 
-                if (string.IsNullOrEmpty(this.TextBoxUrl) || !this._converterController.IsValidYoutubeUrl(this.TextBoxUrl))
+                string validationMessage = this.ValidateUserInput();
+                if (validationMessage != null)
                 {
-                    this.StatusLabelText = "Please enter a valid Youtube URL.";
+                    this.StatusLabelText = validationMessage;
                     return;
                 }
 
@@ -126,7 +134,7 @@
                 this.TextBoxUrlReadOnly = true;
                 this.StatusLabelText = "Converting...";
 
-                await this._converterController.ConvertUrlToMp3Async(this.TextBoxUrl, folderBrowserDialog.SelectedPath).ConfigureAwait(false);
+                await this._converterController.ConvertUrlToVideoAsync(this.TextBoxUrl, folderBrowserDialog.SelectedPath, this.textBoxFileName.Text, this.OutputType).ConfigureAwait(false);
 
                 this.StatusLabelText = "Conversion successful.";
                 this.UpdateConvertButtonStatus();
@@ -141,6 +149,26 @@
                 this.TextBoxUrl = string.Empty;
                 this.TextBoxUrlReadOnly = false;
             }
+        }
+
+        /// <summary>
+        ///     Verifies that all required UI fields are fulfilled prior to starting conversion.
+        /// </summary>
+        /// <returns>Invalid messages if any required fields are missing. Otherwise, null.</returns>
+        private string ValidateUserInput()
+        {
+            if (string.IsNullOrEmpty(this.TextBoxUrl) || !this._converterController.IsValidYoutubeUrl(this.TextBoxUrl))
+            {
+                return "Please enter a valid Youtube URL.";
+            }
+
+            string[] allOutputTypes = Enum.GetNames(typeof(OutputType));
+            if (!allOutputTypes.Contains(this.textBoxFileName.SelectedText))
+            {
+                return "Please select a valid output type.";
+            }
+
+            return null;
         }
 
         /// <summary>
