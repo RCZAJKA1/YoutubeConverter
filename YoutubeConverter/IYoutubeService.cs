@@ -18,9 +18,8 @@ namespace YoutubeConverter
         /// </summary>
         /// <param name="url">The URL of the video to convert..</param>
         /// <param name="savePath">The folder path to save the video.</param>
-        /// <param name="fileName">The file name.</param>
         /// <param name="cancellationToken">The cancellation token to cancel the operation.</param>
         /// <returns>A <see cref="string"/> containing the downloaded mp3 file path.</returns>
-        Task<string> DownloadVideoAsync(string url, string savePath, string fileName = null, OutputType outputType = OutputType.mp3, CancellationToken cancellationToken = default);
+        Task<string> DownloadVideoAsync(string url, string savePath, OutputType outputType = OutputType.mp3, CancellationToken cancellationToken = default);
     }
 }

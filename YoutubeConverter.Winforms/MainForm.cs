@@ -87,13 +87,6 @@
             });
         }
 
-        /// <inheritdoc />
-        public string FileName
-        {
-            get => this.textBoxFileName.Text;
-            set => this.textBoxFileName.EnsureControlThreadSynchronization(() => this.textBoxFileName.Text = value);
-        }
-
         #endregion IMainFormView
 
         /// <summary>
@@ -134,7 +127,7 @@
                 this.TextBoxUrlReadOnly = true;
                 this.StatusLabelText = "Converting...";
 
-                await this._converterController.ConvertUrlToVideoAsync(this.TextBoxUrl, folderBrowserDialog.SelectedPath, this.textBoxFileName.Text, this.OutputType).ConfigureAwait(false);
+                await this._converterController.ConvertUrlToVideoAsync(this.TextBoxUrl, folderBrowserDialog.SelectedPath, this.OutputType).ConfigureAwait(false);
 
                 this.StatusLabelText = "Conversion successful.";
                 this.UpdateConvertButtonStatus();
@@ -163,7 +156,7 @@
             }
 
             string[] allOutputTypes = Enum.GetNames(typeof(OutputType));
-            if (!allOutputTypes.Contains(this.textBoxFileName.SelectedText))
+            if (!allOutputTypes.Contains(this.comboBoxOutputType.Text))
             {
                 return "Please select a valid output type.";
             }

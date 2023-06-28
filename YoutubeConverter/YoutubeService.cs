@@ -29,7 +29,7 @@
         }
 
         /// <inheritdoc />
-        public async Task<string> DownloadVideoAsync(string url, string savePath, string fileName = null, OutputType outputType = OutputType.mp3, CancellationToken cancellationToken = default)
+        public async Task<string> DownloadVideoAsync(string url, string savePath, OutputType outputType = OutputType.mp3, CancellationToken cancellationToken = default)
         {
             url.ThrowIfNull(nameof(url));
             url.ThrowIfEmpty(nameof(url));
@@ -53,21 +53,20 @@
             string filePathWithoutExtension = filePathMp4[..^4];
 
             // TODO: avoid direct file type conversion to prevent potential file corruption
-            string desiredFileName;
+            string desiredFilePath;
             switch (outputType)
             {
                 case OutputType.mp4:
-                    desiredFileName = filePathMp4;
-                    break;
+                    return filePathMp4;
                 case OutputType.wav:
-                    desiredFileName = $"{filePathWithoutExtension}.wav";
+                    desiredFilePath = $"{filePathWithoutExtension}.wav";
                     break;
                 default:
-                    desiredFileName = $"{filePathWithoutExtension}.mp3";
+                    desiredFilePath = $"{filePathWithoutExtension}.mp3";
                     break;
             }
 
-            MediaFile outputFile = new MediaFile { Filename = desiredFileName };
+            MediaFile outputFile = new MediaFile { Filename = desiredFilePath };
 
             using Engine engine = new Engine();
             engine.GetMetadata(inputFile);
@@ -77,7 +76,7 @@
 
             this._fileService.DeleteFile(filePathMp4);
 
-            return Path.Combine(savePath, desiredFileName);
+            return Path.Combine(savePath, desiredFilePath);
         }
     }
 }

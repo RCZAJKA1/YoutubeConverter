@@ -13,10 +13,9 @@
         /// </summary>
         /// <param name="url">The URL of the YouTube video to convert.</param>
         /// <param name="savePath">The folder path to save the resulting mp3 file to.</param>
-        /// <param name="fileName">The file name.</param>
         /// <param name="outputType">The output file type.</param>
         /// <returns>The <see cref="Task"/> that completed converting the URL to MP3.</returns>
-        Task ConvertUrlToVideoAsync(string url, string savePath, string fileName = null, OutputType outputType = OutputType.mp3);
+        Task ConvertUrlToVideoAsync(string url, string savePath, OutputType outputType = OutputType.mp3);
 
         /// <summary>
         ///     Verifies if the request is to cancel and cancels the conversion if necessary.

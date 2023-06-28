@@ -157,12 +157,14 @@
         {
             string url = "https://www.youtube.com/watch?v=";
             string savePath = "testSavePath";
-            string fileName = "testFileName";
             OutputType outputType = OutputType.mp3;
+            string resultFilePath = "resultFilePath";
 
             this._mockFileService.Setup(x => x.DirectoryExists(It.Is<string>(y => y == savePath))).Returns(true);
 
-            this._mockYoutubeService.Setup(x => x.DownloadVideoAsync(It.Is<string>(y => y == url), It.Is<string>(y => y == savePath), It.Is<string>(y => y == fileName), It.Is<OutputType>(y => y == outputType), It.IsAny<CancellationToken>())).ReturnsAsync("test");
+            this._mockYoutubeService.Setup(x => x.DownloadVideoAsync(It.Is<string>(y => y == url), It.Is<string>(y => y == savePath), It.Is<OutputType>(y => y == outputType), It.IsAny<CancellationToken>())).ReturnsAsync(resultFilePath);
+
+            this._mockFileService.Setup(x => x.VerifySuccessfulDownload(It.Is<string>(y => y == resultFilePath)));
 
             ConverterController controller = this.CreateConverterController();
             await controller.ConvertUrlToVideoAsync(url, savePath).ConfigureAwait(false);

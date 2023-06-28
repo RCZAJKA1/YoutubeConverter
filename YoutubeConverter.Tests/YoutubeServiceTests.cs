@@ -46,11 +46,10 @@
             string savePath = "testSavePath";
             CancellationToken cancellationToken = new(false);
             OutputType outputType = OutputType.mp3;
-            string fileName = "testFileName";
 
             YoutubeService service = this.CreateService();
 
-            ArgumentNullException exception = await Assert.ThrowsAsync<ArgumentNullException>(async () => await service.DownloadVideoAsync(null, savePath, fileName, outputType, cancellationToken).ConfigureAwait(false)).ConfigureAwait(false);
+            ArgumentNullException exception = await Assert.ThrowsAsync<ArgumentNullException>(async () => await service.DownloadVideoAsync(null, savePath, outputType, cancellationToken).ConfigureAwait(false)).ConfigureAwait(false);
 
             Assert.Equal("Value cannot be null. (Parameter 'url')", exception.Message);
 
@@ -63,11 +62,10 @@
             string savePath = "testSavePath";
             CancellationToken cancellationToken = new(false);
             OutputType outputType = OutputType.mp3;
-            string fileName = "testFileName";
 
             YoutubeService service = this.CreateService();
 
-            ArgumentEmptyException exception = await Assert.ThrowsAsync<ArgumentEmptyException>(async () => await service.DownloadVideoAsync(string.Empty, savePath, fileName, outputType, cancellationToken).ConfigureAwait(false)).ConfigureAwait(false);
+            ArgumentEmptyException exception = await Assert.ThrowsAsync<ArgumentEmptyException>(async () => await service.DownloadVideoAsync(string.Empty, savePath, outputType, cancellationToken).ConfigureAwait(false)).ConfigureAwait(false);
 
             Assert.Equal("url", exception.Message);
 
@@ -80,11 +78,10 @@
             string url = "https://google.com/";
             CancellationToken cancellationToken = new(false);
             OutputType outputType = OutputType.mp3;
-            string fileName = "testFileName";
 
             YoutubeService service = this.CreateService();
 
-            ArgumentNullException exception = await Assert.ThrowsAsync<ArgumentNullException>(async () => await service.DownloadVideoAsync(url, null, fileName, outputType, cancellationToken).ConfigureAwait(false)).ConfigureAwait(false);
+            ArgumentNullException exception = await Assert.ThrowsAsync<ArgumentNullException>(async () => await service.DownloadVideoAsync(url, null, outputType, cancellationToken).ConfigureAwait(false)).ConfigureAwait(false);
 
             Assert.Equal("Value cannot be null. (Parameter 'savePath')", exception.Message);
 
@@ -97,11 +94,10 @@
             string url = "https://google.com/";
             CancellationToken cancellationToken = new(false);
             OutputType outputType = OutputType.mp3;
-            string fileName = "testFileName";
 
             YoutubeService service = this.CreateService();
 
-            ArgumentEmptyException exception = await Assert.ThrowsAsync<ArgumentEmptyException>(async () => await service.DownloadVideoAsync(url, string.Empty, fileName, outputType, cancellationToken).ConfigureAwait(false)).ConfigureAwait(false);
+            ArgumentEmptyException exception = await Assert.ThrowsAsync<ArgumentEmptyException>(async () => await service.DownloadVideoAsync(url, string.Empty, outputType, cancellationToken).ConfigureAwait(false)).ConfigureAwait(false);
 
             Assert.Equal("savePath", exception.Message);
 
@@ -115,12 +111,11 @@
             string savePath = "testSavePath";
             CancellationToken cancellationToken = new(false);
             OutputType outputType = OutputType.mp3;
-            string fileName = "testFileName";
 
             this._mockFileService.Setup(x => x.DirectoryExists(It.Is<string>(y => y == savePath))).Returns(false);
 
             YoutubeService service = this.CreateService();
-            DirectoryNotFoundException exception = await Assert.ThrowsAsync<DirectoryNotFoundException>(async () => await service.DownloadVideoAsync(url, savePath, fileName, outputType, cancellationToken).ConfigureAwait(false)).ConfigureAwait(false);
+            DirectoryNotFoundException exception = await Assert.ThrowsAsync<DirectoryNotFoundException>(async () => await service.DownloadVideoAsync(url, savePath, outputType, cancellationToken).ConfigureAwait(false)).ConfigureAwait(false);
 
             Assert.Equal($"The specified save path does not exist: {savePath}", exception.Message);
 
